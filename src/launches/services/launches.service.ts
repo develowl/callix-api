@@ -21,4 +21,13 @@ export class LaunchesService {
     });
     return data;
   }
+
+  async getLatestLaunch(): Promise<ILaunch> {
+    const url = `${this.baseUrl}/latest`;
+    const { data } = await this.httpService.axiosRef<ILaunch>({
+      method: 'get',
+      url
+    });
+    return data;
+  }
 }
