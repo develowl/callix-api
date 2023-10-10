@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ILaunch } from '../interfaces/launch.interface';
 import { launchMock } from '../mocks/launch.mock';
 import { LaunchesService } from '../services/launches.service';
-import { LaunchesController } from './launhces.controller';
+import { LaunchesController } from './launches.controller';
 
 describe('LaunchesController', () => {
   let controller: LaunchesController;
