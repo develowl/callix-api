@@ -43,6 +43,7 @@ describe('LaunchesController', () => {
     jest.spyOn(service, 'getNextLaunch').mockResolvedValueOnce(data);
     const response = await controller.getNextLaunch();
 
+    expect(service.getNextLaunch).toBeCalled();
     expect(response.upcoming).toEqual(true);
   });
 
@@ -51,6 +52,17 @@ describe('LaunchesController', () => {
     jest.spyOn(service, 'getLatestLaunch').mockResolvedValueOnce(data);
     const response = await controller.getLatestLaunch();
 
+    expect(service.getLatestLaunch).toBeCalled();
     expect(response.upcoming).toEqual(false);
+  });
+
+  it('should return all upcoming launches', async () => {
+    const data: ILaunch[] = [{ ...launchMock, upcoming: true }];
+    jest.spyOn(service, 'getUpcomingLaunches').mockResolvedValueOnce(data);
+    const response = await controller.getUpcomingLaunch();
+
+    expect(service.getUpcomingLaunches).toBeCalled();
+    expect(response.length).toEqual(1);
+    expect(response[0].upcoming).toEqual(true);
   });
 });
