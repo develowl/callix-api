@@ -31,9 +31,9 @@ export class LaunchesService {
     return data;
   }
 
-  async getUpcomingLaunches(): Promise<ILaunch> {
+  async getUpcomingLaunches(): Promise<ILaunch[]> {
     const url = `${this.baseUrl}/upcoming`;
-    const { data } = await this.httpService.axiosRef<ILaunch>({
+    const { data } = await this.httpService.axiosRef<ILaunch[]>({
       method: 'get',
       url
     });
