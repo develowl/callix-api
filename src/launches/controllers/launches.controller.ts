@@ -20,4 +20,9 @@ export class LaunchesController {
   async getUpcomingLaunch(): Promise<ILaunch[]> {
     return this.launchesService.getUpcomingLaunches();
   }
+
+  @Get('past')
+  async getPastLaunch(): Promise<ILaunch[]> {
+    return this.launchesService.getPastLaunches();
+  }
 }
