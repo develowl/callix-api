@@ -39,4 +39,13 @@ export class LaunchesService {
     });
     return data;
   }
+
+  async getPastLaunches(): Promise<ILaunch[]> {
+    const url = `${this.baseUrl}/last`;
+    const { data } = await this.httpService.axiosRef<ILaunch[]>({
+      method: 'get',
+      url
+    });
+    return data;
+  }
 }
