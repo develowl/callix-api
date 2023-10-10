@@ -10,4 +10,9 @@ export class LaunchesController {
   async getNextLaunch(): Promise<ILaunch> {
     return this.launchesService.getNextLaunch();
   }
+
+  @Get('latest')
+  async getLatestLaunch(): Promise<ILaunch> {
+    return this.launchesService.getLatestLaunch();
+  }
 }
