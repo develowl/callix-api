@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ILaunch } from '../interfaces/launch.interface';
 import { launchMock } from '../mocks/launch.mock';
 import { LaunchesService } from '../services/launches.service';
 import { LaunchesController } from './launhces.controller';
@@ -43,5 +44,13 @@ describe('LaunchesController', () => {
     const response = await controller.getNextLaunch();
 
     expect(response.upcoming).toEqual(true);
+  });
+
+  it('should return the latest launch', async () => {
+    const data: ILaunch = { ...launchMock, upcoming: false };
+    jest.spyOn(service, 'getLatestLaunch').mockResolvedValueOnce(data);
+    const response = await controller.getLatestLaunch();
+
+    expect(response.upcoming).toEqual(false);
   });
 });
