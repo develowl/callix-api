@@ -2,6 +2,7 @@
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ILaunch } from '../interfaces/launch.interface';
 import { launchMock } from '../mocks/launch.mock';
 import { LaunchesService } from './launches.service';
 
@@ -36,11 +37,19 @@ describe('LaunchesService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should be return the next launch', async () => {
-    const data = { ...launchMock, upcoming: true };
+  it('should return the next launch', async () => {
+    const data: ILaunch = { ...launchMock, upcoming: true };
     jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
     const response = await service.getNextLaunch();
 
     expect(response.upcoming).toEqual(true);
+  });
+
+  it('should return the latest launch', async () => {
+    const data: ILaunch = { ...launchMock, upcoming: false };
+    jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
+    const response = await service.getLatestLaunch();
+
+    expect(response.upcoming).toEqual(false);
   });
 });
