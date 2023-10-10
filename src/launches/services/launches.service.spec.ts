@@ -54,10 +54,11 @@ describe('LaunchesService', () => {
   });
 
   it('should return all upcoming launches', async () => {
-    const data: ILaunch = { ...launchMock, upcoming: true };
+    const data: ILaunch[] = [{ ...launchMock, upcoming: true }];
     jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
     const response = await service.getUpcomingLaunches();
 
-    expect(response.upcoming).toEqual(true);
+    expect(response.length).toEqual(1);
+    expect(response[0].upcoming).toEqual(true);
   });
 });
