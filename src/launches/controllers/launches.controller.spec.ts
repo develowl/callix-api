@@ -73,6 +73,6 @@ describe('LaunchesController', () => {
 
     expect(service.getPastLaunches).toBeCalled();
     expect(response.length).toEqual(1);
-    expect(response[0].upcoming).toEqual(true);
+    expect(response[0].upcoming).toEqual(false);
   });
 });
