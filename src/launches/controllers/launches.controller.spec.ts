@@ -65,4 +65,14 @@ describe('LaunchesController', () => {
     expect(response.length).toEqual(1);
     expect(response[0].upcoming).toEqual(true);
   });
+
+  it('should return all past launches', async () => {
+    const data: ILaunch[] = [{ ...launchMock, upcoming: false }];
+    jest.spyOn(service, 'getPastLaunches').mockResolvedValueOnce(data);
+    const response = await controller.getPastLaunch();
+
+    expect(service.getPastLaunches).toBeCalled();
+    expect(response.length).toEqual(1);
+    expect(response[0].upcoming).toEqual(true);
+  });
 });
