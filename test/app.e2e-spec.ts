@@ -1,24 +1,60 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { launchMock } from '../src/launches/mocks/launch.mock';
+import { LaunchesModule } from '../src/launches/modules/launches.module';
+import { LaunchesService } from '../src/launches/services/launches.service';
 
-describe('AppController (e2e)', () => {
+describe('Launches', () => {
   let app: INestApplication;
+  let service = {
+    getNextLaunch: () => ({ ...launchMock, upcoming: true }),
+    getLatestLaunch: () => ({ ...launchMock, upcoming: false }),
+    getUpcomingLaunches: () => [{ ...launchMock, upcoming: true }],
+    getPastLaunches: () => [{ ...launchMock, upcoming: false }]
+  };
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [LaunchesModule]
+    })
+      .overrideProvider(LaunchesService)
+      .useValue(service)
+      .compile();
 
-    app = moduleFixture.createNestApplication();
+    app = moduleRef.createNestApplication();
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it(`/GET next launch`, () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/launches/next')
       .expect(200)
-      .expect('Hello World!');
+      .expect(service.getNextLaunch());
+  });
+
+  it(`/GET latest launch`, () => {
+    return request(app.getHttpServer())
+      .get('/launches/latest')
+      .expect(200)
+      .expect(service.getLatestLaunch());
+  });
+
+  it(`/GET upcoming launches`, () => {
+    return request(app.getHttpServer())
+      .get('/launches/upcoming')
+      .expect(200)
+      .expect(service.getUpcomingLaunches());
+  });
+
+  it(`/GET past launches`, () => {
+    return request(app.getHttpServer())
+      .get('/launches/past')
+      .expect(200)
+      .expect(service.getPastLaunches());
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
