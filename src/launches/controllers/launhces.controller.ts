@@ -15,4 +15,9 @@ export class LaunchesController {
   async getLatestLaunch(): Promise<ILaunch> {
     return this.launchesService.getLatestLaunch();
   }
+
+  @Get('upcoming')
+  async getUpcomingLaunch(): Promise<ILaunch[]> {
+    return this.launchesService.getUpcomingLaunches();
+  }
 }
