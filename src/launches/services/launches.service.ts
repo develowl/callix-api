@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ILaunch } from '../interfaces/launch.interface';
 
 @Injectable()
 export class LaunchesService {
@@ -10,5 +11,14 @@ export class LaunchesService {
     private readonly configService: ConfigService
   ) {
     this.baseUrl = this.configService.getOrThrow<string>('SPACEX_API');
+  }
+
+  async getNextLaunch(): Promise<ILaunch> {
+    const url = `${this.baseUrl}/next`;
+    const { data } = await this.httpService.axiosRef<ILaunch>({
+      method: 'get',
+      url
+    });
+    return data;
   }
 }
