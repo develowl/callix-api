@@ -23,7 +23,7 @@ describe('LaunchesService', () => {
         {
           provide: ConfigService,
           useValue: {
-            getOrThrow: jest.fn((key: string) => 'http://localhost/mock')
+            getOrThrow: jest.fn(() => 'http://localhost/mock')
           }
         }
       ]
