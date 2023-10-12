@@ -11,7 +11,12 @@ export interface ILaunch {
   tdb?: boolean;
   net?: boolean;
   window: number | null;
-  rocket: string | null;
+  rocket: {
+    flickr_images: string[];
+    name: string;
+    wikipedia: string;
+    description: string;
+  };
   success?: boolean;
   failures: {
     time: number;
@@ -27,7 +32,15 @@ export interface ILaunch {
     ships: string[];
   };
   crew: {
-    crew: string | null;
+    crew: {
+      name: string;
+      agency: string;
+      image: string;
+      wikipedia: string;
+      launches: string[];
+      status: string;
+      id: string;
+    };
     role: string | null;
   }[];
   ships: string[];

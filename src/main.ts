@@ -8,6 +8,8 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
   const port = configService.get<number>('PORT', { infer: true });
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Launches API Docs')
     .setDescription('Documentation for Launches API')
