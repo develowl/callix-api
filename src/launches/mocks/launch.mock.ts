@@ -28,26 +28,35 @@ export const launchMock: ILaunch = {
   static_fire_date_unix: null,
   net: false,
   window: null,
-  rocket: '5e9d0d95eda69973a809d1ec',
+  rocket: {
+    flickr_images: [
+      'https://farm1.staticflickr.com/929/28787338307_3453a11a77_b.jpg',
+      'https://farm4.staticflickr.com/3955/32915197674_eee74d81bb_b.jpg',
+      'https://farm1.staticflickr.com/293/32312415025_6841e30bf1_b.jpg',
+      'https://farm1.staticflickr.com/623/23660653516_5b6cb301d1_b.jpg',
+      'https://farm6.staticflickr.com/5518/31579784413_d853331601_b.jpg',
+      'https://farm1.staticflickr.com/745/32394687645_a9c54a34ef_b.jpg'
+    ],
+    name: 'Falcon 9',
+    wikipedia: 'https://en.wikipedia.org/wiki/Falcon_9',
+    description:
+      'Falcon 9 is a two-stage rocket designed and manufactured by SpaceX for the reliable and safe transport of satellites and the Dragon spacecraft into orbit.'
+  },
   success: true,
   failures: [],
   details: null,
   crew: [
     {
-      crew: '62dd7196202306255024d13c',
+      crew: {
+        name: 'Nicole Aunapu Mann',
+        agency: 'NASA',
+        image: 'https://i.imgur.com/EW93kmg.png',
+        wikipedia: 'https://en.wikipedia.org/wiki/Nicole_Aunapu_Mann',
+        launches: ['62dd70d5202306255024d139'],
+        status: 'active',
+        id: '62dd7196202306255024d13c'
+      },
       role: 'Commander'
-    },
-    {
-      crew: '62dd71c9202306255024d13d',
-      role: 'Pilot'
-    },
-    {
-      crew: '62dd7210202306255024d13e',
-      role: 'Mission Specialist 1'
-    },
-    {
-      crew: '62dd7253202306255024d13f',
-      role: 'Mission Specialist 2'
     }
   ],
   ships: [],
