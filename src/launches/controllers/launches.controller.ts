@@ -1,5 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { PageOptionsDto } from '../../common/dto/page-options.dto';
+import { PageDto } from '../../common/dto/page.dto';
 import { ILaunch } from '../interfaces/launch.interface';
 import { launchMock } from '../mocks/launch.mock';
 import { LaunchesService } from '../services/launches.service';
@@ -41,7 +43,9 @@ export class LaunchesController {
     schema: { example: [launchMock] }
   })
   @Get('past')
-  async getPastLaunch(): Promise<ILaunch[]> {
-    return this.launchesService.getPastLaunches();
+  async getPastLaunch(
+    @Query() query: PageOptionsDto
+  ): Promise<PageDto<ILaunch>> {
+    return this.launchesService.getPastLaunches(query);
   }
 }
