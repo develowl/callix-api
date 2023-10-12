@@ -2,6 +2,7 @@
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { PageDto } from 'src/common/dto/page.dto';
 import { ILaunch } from '../interfaces/launch.interface';
 import { launchMock } from '../mocks/launch.mock';
 import { LaunchesService } from './launches.service';
@@ -38,7 +39,9 @@ describe('LaunchesService', () => {
   });
 
   it('should return the next launch', async () => {
-    const data: ILaunch = { ...launchMock, upcoming: true };
+    const data: PageDto<ILaunch> = {
+      docs: [{ ...launchMock, upcoming: true }]
+    };
     jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
     const response = await service.getNextLaunch();
 
@@ -46,7 +49,9 @@ describe('LaunchesService', () => {
   });
 
   it('should return the latest launch', async () => {
-    const data: ILaunch = { ...launchMock, upcoming: false };
+    const data: PageDto<ILaunch> = {
+      docs: [{ ...launchMock, upcoming: false }]
+    };
     jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
     const response = await service.getLatestLaunch();
 
@@ -54,7 +59,9 @@ describe('LaunchesService', () => {
   });
 
   it('should return all upcoming launches', async () => {
-    const data: ILaunch[] = [{ ...launchMock, upcoming: true }];
+    const data: PageDto<ILaunch> = {
+      docs: [{ ...launchMock, upcoming: true }]
+    };
     jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
     const response = await service.getUpcomingLaunches();
 
@@ -63,11 +70,13 @@ describe('LaunchesService', () => {
   });
 
   it('should return all past launches', async () => {
-    const data: ILaunch[] = [{ ...launchMock, upcoming: false }];
+    const data: PageDto<ILaunch> = {
+      docs: [{ ...launchMock, upcoming: false }]
+    };
     jest.spyOn(httpService, 'axiosRef').mockResolvedValueOnce({ data });
     const response = await service.getPastLaunches();
 
-    expect(response.length).toEqual(1);
-    expect(response[0].upcoming).toEqual(false);
+    expect(response.docs.length).toEqual(1);
+    expect(response.docs[0].upcoming).toEqual(false);
   });
 });
